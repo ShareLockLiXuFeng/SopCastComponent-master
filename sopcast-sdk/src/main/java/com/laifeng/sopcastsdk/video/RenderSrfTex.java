@@ -22,7 +22,7 @@ import java.nio.FloatBuffer;
 /**
  * @Title: RenderSrfTex
  * @Package com.laifeng.sopcastsdk.video
- * @Description:
+ * @Description:   纹理渲染 加水印 美颜 等功能
  * @Author Jim
  * @Date 16/9/14
  * @Time 下午2:17

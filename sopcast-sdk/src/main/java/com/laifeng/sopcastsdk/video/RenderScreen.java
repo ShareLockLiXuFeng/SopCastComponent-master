@@ -51,6 +51,11 @@ public class RenderScreen {
         initGL();
     }
 
+    /**
+     *  设置  尺寸
+     * @param width
+     * @param height
+     */
     public void setSreenSize(int width, int height) {
         mScreenW = width;
         mScreenH = height;
@@ -62,6 +67,7 @@ public class RenderScreen {
         mFboTexId = textureId;
     }
 
+
     public void setVideoSize(int width, int height) {
         mWatermarkRatio = mScreenW / ((float)width);
         if(mWatermark != null) {
@@ -69,6 +75,9 @@ public class RenderScreen {
         }
     }
 
+    /**
+     * 初始化 缓存坐标
+     */
     private void initCameraTexCoordBuffer() {
         int cameraWidth, cameraHeight;
         CameraData cameraData = CameraHolder.instance().getCameraData();

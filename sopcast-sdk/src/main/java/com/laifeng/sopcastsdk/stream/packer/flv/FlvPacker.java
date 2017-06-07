@@ -19,7 +19,7 @@ import static com.laifeng.sopcastsdk.stream.packer.flv.FlvPackerHelper.VIDEO_SPE
 /**
  * @Title: FlvPacker
  * @Package com.laifeng.sopcastsdk.stream.packer
- * @Description:
+ * @Description: FLV 打包器
  * @Author Jim
  * @Date 16/9/13
  * @Time 上午11:51

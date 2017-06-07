@@ -3,7 +3,7 @@ package com.laifeng.sopcastsdk.configuration;
 /**
  * @Title: CameraConfiguration
  * @Package ccom.laifeng.sopcastsdk.configuration
- * @Description:
+ * @Description:  摄像头的配置
  * @Author Jim
  * @Date 16/9/12
  * @Time 下午3:26

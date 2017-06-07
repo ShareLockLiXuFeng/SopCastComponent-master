@@ -27,7 +27,7 @@ import com.laifeng.sopcastsdk.video.effect.NullEffect;
 /**
  * @Title: MyRenderer
  * @Package com.laifeng.sopcastsdk.video
- * @Description:  渲染器
+ * @Description:   RenderSurfaceView 的渲染器
  * @Author Jim
  * @Date 16/9/14
  * @Time 下午2:06
@@ -37,24 +37,38 @@ import com.laifeng.sopcastsdk.video.effect.NullEffect;
 public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener{
     private int mSurfaceTextureId = -1;
     private SurfaceTexture mSurfaceTexture;
+    // 水印
     private Watermark mWatermark;
+    // 渲染到屏幕
     private RenderScreen mRenderScreen;
+    //
     private RenderSrfTex mRenderSrfTex;
-
+    //
     private CameraListener mCameraOpenListener;
+    //
     private WeakHandler mHandler = new WeakHandler(Looper.getMainLooper());
+    //
     private GLSurfaceView mView;
+    //
     private boolean isCameraOpen;
+    //
     private Effect mEffect;
+    //
     private int mEffectTextureId;
+    //
     private VideoConfiguration mVideoConfiguration;
-
+    //
     private boolean updateSurface = false;
+    //
     private final float[] mTexMtx = GlUtil.createIdentityMtx();
 
     private int mVideoWidth;
     private int mVideoHeight;
 
+    /**
+     *  初始化NullEffect
+     * @param view
+     */
     public MyRenderer(GLSurfaceView view) {
         mView = view;
         mEffect = new NullEffect(mView.getContext());
@@ -64,6 +78,10 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         this.mCameraOpenListener = cameraOpenListener;
     }
 
+    /**
+     * 设置 VideoConfiguration  视屏配置
+     * @param videoConfiguration
+     */
     public void setVideoConfiguration(VideoConfiguration videoConfiguration) {
         mVideoConfiguration = videoConfiguration;
         mVideoWidth = VideoMediaCodec.getVideoSize(mVideoConfiguration.width);
@@ -73,6 +91,10 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         }
     }
 
+    /**
+     * 设置 录制者
+     * @param recorder
+     */
     public void setRecorder(MyRecorder recorder) {
         synchronized(this) {
             if (recorder != null) {
@@ -95,11 +117,14 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         mView.requestRender();
     }
 
+    //2
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+
         initSurfaceTexture();
     }
 
+    //3
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
         startCameraPreview();
@@ -117,6 +142,10 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         }
     }
 
+    /**
+     * 回到绘制每一帧
+     * @param gl
+     */
     @Override
     public void onDrawFrame(GL10 gl) {
         synchronized(this) {
@@ -135,6 +164,9 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         }
     }
 
+    /**
+     * 初始化 SurfaceTexture
+     */
     private void initSurfaceTexture() {
         int[] textures = new int[1];
         GLES20.glGenTextures(1, textures, 0);
@@ -163,6 +195,9 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         mRenderScreen = new RenderScreen(mEffectTextureId);
     }
 
+    /**
+     * 开启摄像头预览
+     */
     private void startCameraPreview() {
         try {
             CameraUtils.checkCameraService(mView.getContext());
@@ -217,6 +252,10 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         return isCameraOpen;
     }
 
+    /**
+     * 设置水印
+     * @param watermark
+     */
     public void setWatermark(Watermark watermark) {
         mWatermark = watermark;
         if(mRenderScreen != null) {
@@ -227,6 +266,10 @@ public class MyRenderer implements GLSurfaceView.Renderer, SurfaceTexture.OnFram
         }
     }
 
+    /**
+     * 设置美颜效果
+     * @param effect
+     */
     public void setEffect(Effect effect) {
         mEffect.release();
         mEffect = effect;

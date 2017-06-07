@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * @Title: CameraHolder
  * @Package com.youku.crazytogether.app.modules.sopCastV2
- * @Description:
+ * @Description:  摄像头的管理类   管理所有摄像头的操作
  * @Author Jim
  * @Date 16/3/23
  * @Time 上午11:57
@@ -56,17 +56,33 @@ public class CameraHolder {
         mState = State.INIT;
     }
 
+    /**
+     * 获取摄像头数量
+     * @return
+     */
     public int getNumberOfCameras() {
         return Camera.getNumberOfCameras();
     }
+
 
     public CameraData getCameraData() {
         return mCameraData;
     }
 
+    /**
+     * 是否横屏
+     * @return
+     */
     public boolean isLandscape() {
         return (mConfiguration.orientation != CameraConfiguration.Orientation.PORTRAIT);
     }
+
+    /**
+     * 打开摄像头
+     * @return
+     * @throws CameraHardwareException
+     * @throws CameraNotSupportException
+     */
 
     public synchronized Camera openCamera()
             throws CameraHardwareException, CameraNotSupportException {
@@ -103,6 +119,10 @@ public class CameraHolder {
         return mCameraDevice;
     }
 
+    /**
+     * 设置 SurfaceTexture
+     * @param texture
+     */
     public void setSurfaceTexture(SurfaceTexture texture) {
         mTexture = texture;
         if(mState == State.PREVIEW && mCameraDevice != null && mTexture != null) {
@@ -118,11 +138,19 @@ public class CameraHolder {
         return mState;
     }
 
+    /**
+     *  设置CameraConfiguration
+     * @param configuration
+     */
     public void setConfiguration(CameraConfiguration configuration) {
         isTouchMode = (configuration.focusMode != CameraConfiguration.FocusMode.AUTO);
         isOpenBackFirst = (configuration.facing != CameraConfiguration.Facing.FRONT);
         mConfiguration = configuration;
     }
+
+    /**
+     * 开始预览
+     */
 
     public synchronized void startPreview() {
         if(mState != State.OPENED) {
@@ -144,6 +172,10 @@ public class CameraHolder {
         }
     }
 
+    /**
+     * 停止语言
+     */
+
     public synchronized void stopPreview() {
         if(mState != State.PREVIEW) {
             return;
@@ -162,6 +194,10 @@ public class CameraHolder {
         mState = State.OPENED;
     }
 
+    /**
+     * 释放摄像头
+     */
+
     public synchronized void releaseCamera() {
         if(mState == State.PREVIEW) {
             stopPreview();
@@ -178,6 +214,9 @@ public class CameraHolder {
         mState = State.INIT;
     }
 
+    /**
+     * 释放资源
+     */
     public void release() {
         mCameraDatas = null;
         mTexture = null;
@@ -186,6 +225,11 @@ public class CameraHolder {
         mConfiguration = CameraConfiguration.createDefault();
     }
 
+    /**
+     * 设置焦点
+     * @param x
+     * @param y
+     */
     public void setFocusPoint(int x, int y) {
         if(mState != State.PREVIEW || mCameraDevice == null) {
             return;
@@ -213,6 +257,11 @@ public class CameraHolder {
         }
     }
 
+    /**
+     * 自动对焦
+     * @param focusCallback
+     * @return
+     */
     public boolean doAutofocus(Camera.AutoFocusCallback focusCallback) {
         if(mState != State.PREVIEW || mCameraDevice == null) {
             return false;
@@ -233,6 +282,10 @@ public class CameraHolder {
         return true;
     }
 
+    /**
+     *  改变焦点模式
+     * @param touchMode
+     */
     public void changeFocusMode(boolean touchMode) {
         if(mState != State.PREVIEW || mCameraDevice == null || mCameraData == null) {
             return;
@@ -246,10 +299,18 @@ public class CameraHolder {
         }
     }
 
+    /**
+     * 切换焦点模式
+     */
     public void switchFocusMode() {
         changeFocusMode(!isTouchMode);
     }
 
+    /**
+     * 缩放
+     * @param isBig
+     * @return
+     */
     public float cameraZoom(boolean isBig) {
         if(mState != State.PREVIEW || mCameraDevice == null || mCameraData == null) {
             return -1;
@@ -264,6 +325,10 @@ public class CameraHolder {
         return (float) params.getZoom()/params.getMaxZoom();
     }
 
+    /**
+     * 切换摄像头
+     * @return
+     */
     public boolean switchCamera() {
         if(mState != State.PREVIEW) {
             return false;
@@ -288,6 +353,10 @@ public class CameraHolder {
         }
     }
 
+    /**
+     * 切换闪光灯
+     * @return
+     */
     public boolean switchLight() {
         if(mState != State.PREVIEW || mCameraDevice == null || mCameraData == null) {
             return false;

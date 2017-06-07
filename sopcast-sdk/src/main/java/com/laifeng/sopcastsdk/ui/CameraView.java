@@ -162,6 +162,7 @@ public class CameraView extends FrameLayout {
     }
 
     /**
+     *  手势探测器
      * Handles the pinch-to-zoom gesture
      */
     private class ZoomGestureListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
@@ -184,6 +185,10 @@ public class CameraView extends FrameLayout {
         }
     }
 
+    /**
+     *  改变对焦模式的UI变化
+     *
+     */
     protected void changeFocusModeUI() {
         CameraData cameraData = CameraHolder.instance().getCameraData();
         if(cameraData != null && cameraData.supportTouchFocus && cameraData.touchFocusMode) {
@@ -202,6 +207,11 @@ public class CameraView extends FrameLayout {
         }
     }
 
+    /**
+     *  事件代理
+     * @param event
+     * @return
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(isFocusTouchMode) {
@@ -211,6 +221,11 @@ public class CameraView extends FrameLayout {
         }
     }
 
+    /**
+     *  测量
+     * @param widthMeasureSpec
+     * @param heightMeasureSpec
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);

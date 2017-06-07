@@ -12,7 +12,7 @@ import com.laifeng.sopcastsdk.utils.WeakHandler;
 /**
  * @Title: RtmpSender
  * @Package com.laifeng.sopcastsdk.stream.sender.rtmp
- * @Description:
+ * @Description: Rtmp 推流
  * @Author Jim
  * @Date 16/9/21
  * @Time 上午11:16
@@ -70,10 +70,21 @@ public class RtmpSender implements Sender, SendQueueListener {
         mSendQueue = sendQueue;
     }
 
+    /**
+     * 设置视频参数
+     * @param width
+     * @param height
+     */
     public void setVideoParams(int width, int height) {
         rtmpConnection.setVideoParams(width, height);
     }
 
+    /**
+     * 设置音频参数
+     * @param sampleRate
+     * @param sampleSize
+     * @param isStereo
+     */
     public void setAudioParams(int sampleRate, int sampleSize, boolean isStereo) {
         rtmpConnection.setAudioParams(sampleRate, sampleSize, isStereo);
     }
