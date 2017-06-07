@@ -35,6 +35,10 @@ import com.laifeng.sopcastsdk.video.effect.NullEffect;
 
 import static com.laifeng.sopcastsdk.constant.SopCastConstant.TAG;
 
+/***
+ *  横屏
+ *
+ */
 public class LandscapeActivity extends Activity {
     private CameraLivingView mLFLiveView;
     private MultiToggleImageButton mMicBtn;

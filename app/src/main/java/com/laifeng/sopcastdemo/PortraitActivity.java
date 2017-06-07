@@ -22,18 +22,29 @@ import com.laifeng.sopcastsdk.utils.SopCastLog;
 import com.laifeng.sopcastsdk.video.effect.GrayEffect;
 import com.laifeng.sopcastsdk.video.effect.NullEffect;
 
+/**
+ * 竖屏
+ *
+ */
 public class PortraitActivity extends Activity {
+    // 直播 View（最主要的）
     private CameraLivingView mLFLiveView;
     private MultiToggleImageButton mMicBtn;
     private MultiToggleImageButton mFlashBtn;
     private MultiToggleImageButton mFaceBtn;
     private MultiToggleImageButton mBeautyBtn;
     private MultiToggleImageButton mFocusBtn;
+    // 手势探测器
     private GestureDetector mGestureDetector;
+    // 灰度效果
     private GrayEffect mGrayEffect;
+    // 无效果
     private NullEffect mNullEffect;
+    // 录制按钮
     private ImageButton mRecordBtn;
+    // 是否是灰
     private boolean isGray;
+    // 是否正在录制
     private boolean isRecording;
 
     @Override
@@ -46,11 +57,17 @@ public class PortraitActivity extends Activity {
         initLiveView();
     }
 
+    /**
+     * 初始化效果
+     */
     private void initEffects() {
         mGrayEffect = new GrayEffect(this);
         mNullEffect = new NullEffect(this);
     }
 
+    /**
+     * 初始化View
+     */
     private void initViews() {
         mLFLiveView = (CameraLivingView) findViewById(R.id.liveView);
         mMicBtn = (MultiToggleImageButton) findViewById(R.id.record_mic_button);
@@ -61,25 +78,41 @@ public class PortraitActivity extends Activity {
         mRecordBtn = (ImageButton) findViewById(R.id.btnRecord);
     }
 
+    /**
+     * 初始化监听器
+     *
+     */
     private void initListeners() {
+        /**
+         * 静音
+         */
         mMicBtn.setOnStateChangeListener(new MultiToggleImageButton.OnStateChangeListener() {
             @Override
             public void stateChanged(View view, int state) {
                 mLFLiveView.mute(true);
             }
         });
+        /**
+         * 切换闪光灯
+         */
         mFlashBtn.setOnStateChangeListener(new MultiToggleImageButton.OnStateChangeListener() {
             @Override
             public void stateChanged(View view, int state) {
                 mLFLiveView.switchTorch();
             }
         });
+        /**
+         * 切换摄像头
+         */
         mFaceBtn.setOnStateChangeListener(new MultiToggleImageButton.OnStateChangeListener() {
             @Override
             public void stateChanged(View view, int state) {
                 mLFLiveView.switchCamera();
             }
         });
+        /**
+         * 设置灰度效果
+         */
         mBeautyBtn.setOnStateChangeListener(new MultiToggleImageButton.OnStateChangeListener() {
             @Override
             public void stateChanged(View view, int state) {
@@ -92,12 +125,18 @@ public class PortraitActivity extends Activity {
                 }
             }
         });
+        /**
+         * 设置焦点模式
+         */
         mFocusBtn.setOnStateChangeListener(new MultiToggleImageButton.OnStateChangeListener() {
             @Override
             public void stateChanged(View view, int state) {
                 mLFLiveView.switchFocusMode();
             }
         });
+        /**
+         * 录制按钮
+         */
         mRecordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +153,7 @@ public class PortraitActivity extends Activity {
         });
     }
 
+    //1
     private void initLiveView() {
         SopCastLog.isOpen(true);
         mLFLiveView.init();
